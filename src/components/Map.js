@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { MapPin, Star } from 'lucide-react';
 
+import { bergenCenter } from '@/data/bars';
+
 const Map = ({ bars, selectedBar, onBarSelect }) => {
   const [map, setMap] = useState(null);
   const [L, setL] = useState(null);
@@ -32,7 +34,7 @@ const Map = ({ bars, selectedBar, onBarSelect }) => {
         doubleClickZoom: true,
         touchZoom: true,
         dragging: true
-      }).setView([60.3913, 5.3221], 14);
+      }).setView(bergenCenter, 15);
 
       // Add OpenStreetMap tiles
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,6 +54,7 @@ const Map = ({ bars, selectedBar, onBarSelect }) => {
 
       // Create new markers
       const newMarkers = bars.map(bar => {
+        console.log(`Creating marker for ${bar.name} at coordinates:`, bar.coordinates);
         const marker = L.marker(bar.coordinates)
           .bindPopup(`
             <div class="p-2">
@@ -61,6 +64,7 @@ const Map = ({ bars, selectedBar, onBarSelect }) => {
                 <span class="text-yellow-500 text-xs">★</span>
                 <span class="text-xs ml-1">${bar.rating}</span>
               </div>
+              <p class="text-xs text-gray-500 mt-1">${bar.address}</p>
             </div>
           `)
           .on('click', () => {
@@ -71,6 +75,7 @@ const Map = ({ bars, selectedBar, onBarSelect }) => {
       });
 
       markersRef.current = newMarkers;
+      console.log(`Added ${newMarkers.length} markers to the map`);
     }
   }, [map, L, bars, onBarSelect]);
 
