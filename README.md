@@ -1,4 +1,4 @@
-# Bergen Bar Advisor
+# UIB INFO212 System Development Project, made with GitHub Copilot, Claude Sonnet 4
 
 A mobile-first web application for discovering the best bars in Bergen, Norway. Built with Next.js, Tailwind CSS, and Leaflet maps.
 
